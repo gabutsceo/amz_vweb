@@ -1,0 +1,6 @@
+# Ignore PHP's composer dependency manager files
+vendor/
+composer.phar
+
+# Ignore environment settings file
+.env
