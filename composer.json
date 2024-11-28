@@ -1,7 +1,7 @@
 {
-  "name": "my-heroku-app",
+  "name": "avonixor/check-mail-web",
   "description": "My app to check email",
   "require": {
-    "php": "7.4.*"
+    "php": "8.3.6"
   }
 }
