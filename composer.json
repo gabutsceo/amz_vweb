@@ -1,0 +1,7 @@
+{
+  "name": "my-heroku-app",
+  "description": "My app to check email",
+  "require": {
+    "php": "7.4.*"
+  }
+}
