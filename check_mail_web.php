@@ -1,5 +1,9 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");  // Allow requests from any origin
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");  // Allowed methods
+header("Access-Control-Allow-Headers: Content-Type");  // Allowed headers
+
 // Fungsi untuk memeriksa email Amazon
 function checkAmazonEmail($email) {
     $url = "https://www.amazon.com/ap/signin";
