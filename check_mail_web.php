@@ -68,7 +68,7 @@ function checkAmazonEmail($email) {
     // Tentukan hasil pengecekan berdasarkan kondisi
     if (strpos($response, "ap_change_login_claim") !== false) {
         return "Valid";
-    } elseif (strpos($response, "We cannot find an account with that email address") !== true) {
+    } elseif (strpos($response, "We cannot find an account with that email address") !== false) {
         return "Invalid";
     } elseif ($http_code != 200) {
         return "Unknown (HTTP Error $http_code)";
