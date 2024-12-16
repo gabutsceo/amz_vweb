@@ -1,21 +1,8 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
-// Daftar user-agent
-function getRandomUserAgent() {
-    $userAgents = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Linux; Android 10; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36",
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.5 Mobile/15E148 Safari/604.1",
-    ];
-
-    return $userAgents[array_rand($userAgents)];
-}
+header("Access-Control-Allow-Origin: *");  // Allow requests from any origin
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");  // Allowed methods
+header("Access-Control-Allow-Headers: Content-Type");  // Allowed headers
 
 // Fungsi untuk memeriksa email Amazon
 function checkAmazonEmail($email) {
@@ -33,7 +20,7 @@ function checkAmazonEmail($email) {
 
     // Headers
     $headers = [
-        "User-Agent: " . getRandomUserAgent(), // Random User-Agent
+        "User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.5 Mobile/15E148 Safari/604.1",
         "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
         "Accept-Language: en-US,en;q=0.9",
         "Accept-Encoding: gzip, deflate, br",
@@ -48,6 +35,7 @@ function checkAmazonEmail($email) {
         "Sec-Fetch-Mode: navigate",
         "Sec-Fetch-Site: same-origin",
         "Sec-Fetch-User: ?1",
+        "",
     ];
 
     // Data
@@ -91,8 +79,6 @@ function checkAmazonEmail($email) {
 // Mengambil email dari URL query parameter
 if (isset($_GET['email'])) {
     $email = $_GET['email'];
-    // Tambahkan delay 5 detik sebelum memeriksa email
-    sleep(6);
     // Panggil fungsi untuk mengecek email
     $result = checkAmazonEmail($email);
     echo $result;
